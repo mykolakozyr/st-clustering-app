@@ -1,3 +1,3 @@
 gdal-bin
-python3-gdal
+libgdal-dev
 proj-bin
