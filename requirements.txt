@@ -1,3 +1,5 @@
+--only-binary all
+
 streamlit==1.38.0
 geopandas==0.14.4
 shapely==2.0.6
