@@ -7,6 +7,7 @@ Streamlit demo that showcases spatio-temporal clustering of polygons using the [
 - Interactive parameter tuning for time window, minimum cluster size, and polygon overlap threshold.
 - Immediate data preview and tabular cluster results for quick validation.
 - Color-coded Folium map that visualizes clusters and exposes attributes in tooltips.
+- One-click download of the full clustered GeoJSON (including noise clusters) using the uploaded filename with a `_clustered` suffix.
 - Session-based color persistence for improved visual comparison between runs.
 
 ## Running the App

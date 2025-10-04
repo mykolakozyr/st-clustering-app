@@ -15,6 +15,7 @@
 - Production runs on Streamlit Cloud at https://st-clustering.streamlit.app/; verify issues there before reproducing locally.
 - Streamlit caching and pip wheels can mask dependency updates—restart the app after clearing cache and forcing reinstall of `st_polygoncluster`.
 - Changes that alter clustering parameters (e.g., overlap slider defaults) should ship with brief release notes for hosted users.
+- Download button emits GeoJSON named after the uploaded file with `_clustered` appended; confirm this behaviour after dependency or UI refactors.
 
 ## Coding Style & Naming Conventions
 - Target Python 3.10+ with 4-space indentation and PEP 8 naming (`snake_case` for functions, `CapWords` for classes).

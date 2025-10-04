@@ -25,7 +25,8 @@ This tool lets you:
 - Upload a **GeoJSON** file with polygons
 - Select a **time column** and define the clustering period (seconds, minutes, hours, days)
 - Set a **minimum cluster size** (small groups are filtered as noise)
-- Set a **minimum overlap percentage** for polygons to be considered neighbors
+- Optionally require a **minimum overlap percentage** before polygons are treated as neighbors
+- Download the full clustered output as GeoJSON for further analysis
 - Run the analysis and explore the results
 
 Clusters are identified by their spatial overlaps and temporal proximity, and shown in different random colors on an interactive map.  
@@ -106,6 +107,16 @@ if uploaded_file:
         st.subheader("Clustered result (first 10 rows)")
         st.dataframe(clustered.head(10))
 
+        # Prepare full GeoJSON export, preserving noise clusters (-1)
+        export_gdf = clustered.copy()
+        for col in export_gdf.columns:
+            if export_gdf[col].dtype.kind in ("M", "m"):
+                export_gdf[col] = export_gdf[col].astype(str)
+        input_name = getattr(uploaded_file, "name", "clustered")
+        base_name = input_name.rsplit(".", 1)[0]
+        export_file_name = f"{base_name}_clustered.geojson"
+        export_geojson = export_gdf.to_json().encode("utf-8")
+
         # --- Map ---
         st.subheader("Clustered Polygons Map")
 
@@ -147,6 +158,13 @@ if uploaded_file:
             st_folium(m, width="100%", height=600)
         else:
             st.info("No valid clusters to display on map.")
+
+        st.download_button(
+            label="Download clustered GeoJSON",
+            data=export_geojson,
+            file_name=export_file_name,
+            mime="application/geo+json"
+        )
 
 st.markdown("---")
 st.markdown(
