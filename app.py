@@ -25,10 +25,10 @@ This tool lets you:
 - Upload a **GeoJSON** file with polygons
 - Select a **time column** and define the clustering period (seconds, minutes, hours, days)
 - Set a **minimum cluster size** (small groups are filtered as noise)
+- Set a **minimum overlap percentage** for polygons to be considered neighbors
 - Run the analysis and explore the results
 
-Clusters are identified by their spatial overlaps and temporal proximity,  
-and shown in different random colors on an interactive map.  
+Clusters are identified by their spatial overlaps and temporal proximity, and shown in different random colors on an interactive map.  
 """
 )
 
@@ -60,7 +60,24 @@ if uploaded_file:
     unit_multipliers = {"seconds": 1, "minutes": 60, "hours": 3600, "days": 86400}
     cluster_period = cluster_value * unit_multipliers[cluster_unit]
 
-    min_cluster_size = st.number_input("Minimum cluster size", min_value=1, value=2, step=1, key="min_cluster_size")
+    col_cluster_size, col_overlap = st.columns(2)
+    with col_cluster_size:
+        min_cluster_size = st.number_input(
+            "Minimum cluster size",
+            min_value=1,
+            value=2,
+            step=1,
+            key="min_cluster_size"
+        )
+    with col_overlap:
+        overlap_threshold = st.slider(
+            "Minimum overlap (%)",
+            min_value=0,
+            max_value=100,
+            value=0,
+            step=5,
+            help="Intersection-over-union percentage needed for polygons to be considered neighbors."
+        )
 
     # Step 4: Action buttons
     col1, col2 = st.columns(2)
@@ -78,7 +95,8 @@ if uploaded_file:
             gdf,
             time_key=time_key if time_key else None,
             time_threshold=cluster_period,
-            min_cluster_size=min_cluster_size
+            min_cluster_size=min_cluster_size,
+            overlap_threshold=overlap_threshold
         )
 
     # Step 5: Show results if available
