@@ -1,14 +1,12 @@
-# st-clustering-app
+# Spatio-Temporal Polygon Clustering App
 
 ## Overview
 Streamlit demo that showcases spatio-temporal clustering of polygons using the [ST-PolygonCluster](https://github.com/mykolakozyr/ST-PolygonCluster) library. Upload a GeoJSON file, choose a time column and clustering window, adjust spatial and temporal thresholds, then explore the resulting clusters on an interactive Folium map.
 
 ## Key Features
 - Interactive parameter tuning for time window, minimum cluster size, and polygon overlap threshold.
-- Immediate data preview and tabular cluster results for quick validation.
 - Color-coded Folium map that visualizes clusters and exposes attributes in tooltips.
 - One-click download of the full clustered GeoJSON (including noise clusters) using the uploaded filename with a `_clustered` suffix.
-- Session-based color persistence for improved visual comparison between runs.
 
 ## Running the App
 - **Streamlit Cloud:** Visit https://st-clustering.streamlit.app/ to launch the hosted demo instantly. No setup is required beyond uploading your dataset.
@@ -18,7 +16,7 @@ Streamlit demo that showcases spatio-temporal clustering of polygons using the [
   3. `streamlit run app.py`
 
 ## Data Preparation Tips
-- Upload GeoJSON or JSON files containing polygon geometries; ensure geometries are valid and projected consistently.
+- Upload GeoJSON or JSON files containing polygon geometries; ensure geometries are valid.
 - Provide a datetime column (ISO 8601 recommended) to enable temporal clustering; otherwise the app falls back to purely spatial grouping.
 - Large datasets can slow down Folium rendering—start with small samples when tuning parameters.
 
